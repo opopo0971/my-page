@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박환유 멍청의 사이버보라빛 공간</title>
+    <!-- Google Fonts import for Neon feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Orbitron:wght@700;900&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0b1a;
+            --neon-pink: #ff007f;
+            --neon-blue: #00f3ff;
+            --neon-purple: #9d00ff;
+            --neon-yellow: #ffe600;
+            --card-bg: rgba(20, 20, 45, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+            /* Grid overlay effect */
+            background-image: 
+                linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 0, 127, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Neon Glow Utility Animation */
+        @keyframes pulseGlow {
+            0%, 100% {
+                text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
+            }
+            50% {
+                text-shadow: 0 0 5px var(--neon-pink), 0 0 15px var(--neon-pink), 0 0 25px var(--neon-pink);
+            }
+        }
+
+        @keyframes bluePulseGlow {
+            0%, 100% {
+                text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+            }
+            50% {
+                text-shadow: 0 0 5px var(--neon-blue), 0 0 15px var(--neon-blue), 0 0 25px var(--neon-blue);
+            }
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Header / Banner */
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            position: relative;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--neon-blue);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .title {
+            font-family: 'Jua', sans-serif;
+            font-size: 3.5rem;
+            color: #fff;
+            animation: pulseGlow 2s infinite alternate;
+            line-height: 1.2;
+            word-break: keep-all;
+        }
+
+        .title span {
+            color: var(--neon-yellow);
+        }
+
+        .section-title {
+            font-family: 'Jua', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            color: var(--neon-blue);
+            animation: bluePulseGlow 3s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        /* Cards Flip Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .card-container {
+            background-color: transparent;
+            height: 280px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 15px rgba(157, 0, 255, 0.4), inset 0 0 15px rgba(157, 0, 255, 0.2);
+            backdrop-filter: blur(5px);
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .card-front {
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card-container:hover .card-front {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.6), inset 0 0 20px rgba(255, 0, 127, 0.3);
+        }
+
+        .card-front .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+        }
+
+        .card-front h3 {
+            font-family: 'Jua', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        .card-front .hint {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 4px 12px;
+            border-radius: 12px;
+            box-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+            background: rgba(30, 10, 40, 0.95);
+        }
+
+        .card-back h4 {
+            font-family: 'Jua', sans-serif;
+            color: var(--neon-yellow);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .card-back p {
+            font-size: 1rem;
+            line-height: 1.6;
+            word-break: keep-all;
+            color: #e2e2e2;
+        }
+
+        /* Quiz Box */
+        .quiz-card {
+            background: var(--card-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-question {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #fff;
+            word-break: keep-all;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn-ox {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid;
+            background: transparent;
+            font-family: 'Jua', sans-serif;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-o {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+        }
+
+        .btn-o:hover, .btn-o:active {
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 30px var(--neon-pink);
+            transform: scale(1.1);
+        }
+
+        .btn-x {
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .btn-x:hover, .btn-x:active {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 30px var(--neon-blue);
+            transform: scale(1.1);
+        }
+
+        .quiz-result {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-family: 'Jua', sans-serif;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        /* Lunch Menu Box */
+        .lunch-box {
+            background: var(--card-bg);
+            border: 2px solid var(--neon-yellow);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 230, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .menu-display {
+            font-family: 'Jua', sans-serif;
+            font-size: 2.2rem;
+            color: var(--neon-yellow);
+            margin: 20px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 10px rgba(255, 230, 0, 0.6);
+            word-break: keep-all;
+        }
+
+        .btn-neon {
+            background: transparent;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            padding: 14px 28px;
+            font-size: 1.2rem;
+            font-family: 'Jua', sans-serif;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 230, 0, 0.4);
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .btn-neon:hover, .btn-neon:active {
+            background: var(--neon-yellow);
+            color: #000;
+            box-shadow: 0 0 30px var(--neon-yellow);
+            transform: translateY(-3px);
+        }
+
+        /* Canvas Overlay for Sparkles and Confetti */
+        #sparkleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .btn-ox {
+                width: 75px;
+                height: 75px;
+                font-size: 2rem;
+            }
+            .quiz-question {
+                font-size: 1.2rem;
+            }
+            .menu-display {
+                font-size: 1.7rem;
+            }
+            .btn-neon {
+                font-size: 1rem;
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sparkle Canvas -->
+    <canvas id="sparkleCanvas"></canvas>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="subtitle">Welcome to Neon World</div>
+            <h1 class="title">별명: <span>박환유 컷</span></h1>
+        </header>
+
+        <!-- Favorite Things Section (Flip Cards) -->
+        <section>
+            <h2 class="section-title">✨ 내가 좋아하는 것 3가지 ✨</h2>
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <div class="card-container" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="icon">⚡</div>
+                            <h3>포켓몬</h3>
+                            <div class="hint">터치해서 이유 보기</div>
+                        </div>
+                        <div class="card-back">
+                            <h4>포켓몬을 좋아하는 이유</h4>
+                            <p>피카츄의 백만볼트처럼 내 인생도 언제나 ⚡찌릿찌릿⚡ 짜릿하고 스릴 넘쳐야 하기 때문!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-container" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="icon">📱</div>
+                            <h3>웹툰</h3>
+                            <div class="hint">터치해서 이유 보기</div>
+                        </div>
+                        <div class="card-back">
+                            <h4>웹툰을 좋아하는 이유</h4>
+                            <p>스크롤만 내려도 또 다른 세계로 떠날 수 있는 최고의 합법적 딴짓거리니까! 🔥</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-container" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="icon">🛌</div>
+                            <h3>잠자기</h3>
+                            <div class="hint">터치해서 이유 보기</div>
+                        </div>
+                        <div class="card-back">
+                            <h4>잠자기를 좋아하는 이유</h4>
+                            <p>이불 밖은 위험해... 침대 위에서 꿀잠 잘 때가 세계 최고의 명상 시간이자 피로 회복제! 😴</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OX Quiz Section -->
+        <section>
+            <h2 class="section-title">❓ 진실 혹은 거짓 ❓</h2>
+            <div class="quiz-card">
+                <div class="quiz-question">"박환유는 멍청하다"</div>
+                <div class="quiz-buttons">
+                    <button class="btn-ox btn-o" onclick="checkQuiz('O')">O</button>
+                    <button class="btn-ox btn-x" onclick="checkQuiz('X')">X</button>
+                </div>
+                <div class="quiz-result" id="quizResult"></div>
+            </div>
+        </section>
+
+        <!-- Lunch Menu Recommendation -->
+        <section>
+            <h2 class="section-title">🍔 오늘의 점심 추천 🍕</h2>
+            <div class="lunch-box">
+                <p style="color: #aaa; font-size: 0.95rem;">오늘 뭐 먹을지 고민이라면? 아래 버튼을 눌러보세요!</p>
+                <div class="menu-display" id="menuDisplay">❓ 과연 오늘의 메뉴 3개는?</div>
+                <button class="btn-neon" onclick="recommendMenu()">메뉴 3개 무작위 뽑기 🎲</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        /* ----------------------------------------------------
+           1. Card Flip Logic
+        ---------------------------------------------------- */
+        function flipCard(cardElement) {
+            cardElement.classList.toggle('flipped');
+        }
+
+        /* ----------------------------------------------------
+           2. OX Quiz Logic + Celebration Effect
+        ---------------------------------------------------- */
+        function checkQuiz(userAnswer) {
+            const resultEl = document.getElementById('quizResult');
+            if (userAnswer === 'O') {
+                resultEl.style.color = 'var(--neon-pink)';
+                resultEl.innerHTML = '🎉 정답입니다! 박환유는 귀여운 멍청이랍니다! 🥳';
+                triggerCelebration();
+            } else {
+                resultEl.style.color = 'var(--neon-blue)';
+                resultEl.innerHTML = '😢 땡! 틀렸습니다. 사실을 인정하세요! 😜';
+                triggerDisappointment();
+            }
+        }
+
+        /* ----------------------------------------------------
+           3. Lunch Menu Logic
+        ---------------------------------------------------- */
+        const menuList = [
+            "🔥 매콤달콤 마라탕",
+            "🍕 치즈 폭발 피자",
+            "🍔 바삭한 수제버거",
+            "🍜 뜨끈한 돈코츠 라멘",
+            "🍱 정갈한 돈까스 정식",
+            "🍡 떡볶이 & 튀김 콤보",
+            "🥩 육즙 가득 삼겹살 덮밥",
+            "🥗 프레시한 연어 포케",
+            "🍲 얼큰한 김치찌개",
+            "🍛 고소한 버터치킨 카레",
+            "🍝 매콤한 로제 파스타",
+            "🥪 프레시 햄치즈 샌드위치"
+        ];
+
+        let isRecommending = false;
+
+        // Helper array shuffle algorithm (Fisher-Yates)
+        function getRandomMenuTriple() {
+            const shuffled = [...menuList].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 3);
+        }
+
+        function recommendMenu() {
+            if (isRecommending) return;
+            isRecommending = true;
+
+            const display = document.getElementById('menuDisplay');
+            let counter = 0;
+            
+            // Slots Machine Animation Effect
+            const interval = setInterval(() => {
+                const randomTemp = getRandomMenuTriple();
+                display.innerHTML = `<div style="font-size: 1.4rem; line-height: 1.6; color: var(--neon-yellow);">${randomTemp[0]}<br>${randomTemp[1]}<br>${randomTemp[2]}</div>`;
+                counter++;
+
+                if (counter > 15) {
+                    clearInterval(interval);
+                    const finalChoices = getRandomMenuTriple();
+                    display.innerHTML = `
+                        <div style="font-size: 1.3rem; line-height: 1.7; text-shadow: 0 0 10px rgba(255, 230, 0, 0.8);">
+                            1️⃣ ${finalChoices[0]}<br>
+                            2️⃣ ${finalChoices[1]}<br>
+                            3️⃣ ${finalChoices[2]}
+                        </div>
+                    `;
+                    isRecommending = false;
+                }
+            }, 70);
+        }
+
+        /* ----------------------------------------------------
+           4. Mouse Sparkle Particle Effect & Canvas Animations
+        ---------------------------------------------------- */
+        const canvas = document.getElementById('sparkleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        const confetti = [];
+
+        // Colors for sparkles
+        const neonColors = ['#ff007f', '#00f3ff', '#ffe600', '#9d00ff', '#ffffff'];
+
+        // Floating Text Array for click effects
+        const floatingTexts = [];
+
+        class FloatingText {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.text = "박환유는 멍청하다";
+                this.color = neonColors[Math.floor(Math.random() * neonColors.length)];
+                this.alpha = 1;
+                this.speedY = -1.2; // Move upwards
+                this.decay = 0.02;  // Fade speed
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.fillStyle = this.color;
+                ctx.font = "bold 18px 'Jua', sans-serif";
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.textAlign = "center";
+                ctx.fillText(this.text, this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor(x, y) {
+                this.size = Math.random() * 1.5 + 0.8; // Reduced size for subtle effect
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 1.2;
+                this.speedY = (Math.random() - 0.5) * 1.2;
+                this.color = neonColors[Math.floor(Math.random() * neonColors.length)];
+                this.alpha = 1;
+                this.decay = Math.random() * 0.04 + 0.025;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class Confetti {
+            constructor(x, y, isSuccess) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 4;
+                this.speedX = (Math.random() - 0.5) * 12;
+                this.speedY = isSuccess ? (Math.random() - 0.7) * 12 : Math.random() * 4 + 2;
+                this.color = isSuccess 
+                    ? neonColors[Math.floor(Math.random() * neonColors.length)]
+                    : '#555555';
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.gravity = isSuccess ? 0.3 : 0.5;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.speedY += this.gravity;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        // Add mouse move listener
+        let lastSparkleTime = 0;
+        window.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastSparkleTime > 30) { // Throttle sparkle generation
+                particles.push(new Particle(e.clientX, e.clientY));
+                lastSparkleTime = now;
+            }
+        });
+
+        // Add touch move listener for mobile support
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                const now = Date.now();
+                if (now - lastSparkleTime > 60) {
+                    particles.push(new Particle(touch.clientX, touch.clientY));
+                    lastSparkleTime = now;
+                }
+            }
+        });
+
+        // Click & Tap listener for Floating Text effect
+        window.addEventListener('click', (e) => {
+            floatingTexts.push(new FloatingText(e.clientX, e.clientY));
+        });
+
+        // Trigger Celebration (Confetti Explosion)
+        function triggerCelebration() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            for (let i = 0; i < 100; i++) {
+                confetti.push(new Confetti(centerX, centerY, true));
+            }
+        }
+
+        // Trigger Disappointment (Falling gray flakes)
+        function triggerDisappointment() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 3;
+            for (let i = 0; i < 40; i++) {
+                confetti.push(new Confetti(centerX, centerY, false));
+            }
+        }
+
+        // Animation Loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Handle Mouse Sparkles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            // Handle Floating Text on Click
+            for (let i = floatingTexts.length - 1; i >= 0; i--) {
+                floatingTexts[i].update();
+                floatingTexts[i].draw();
+                if (floatingTexts[i].alpha <= 0) {
+                    floatingTexts.splice(i, 1);
+                }
+            }
+
+            // Handle Quiz Confetti Effects
+            for (let i = confetti.length - 1; i >= 0; i--) {
+                confetti[i].update();
+                confetti[i].draw();
+                if (confetti[i].alpha <= 0) {
+                    confetti.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Start animation loop on load
+        window.onload = function() {
+            animate();
+        };
+    </script>
+</body>
+</html>
